@@ -740,6 +740,56 @@ print(person.name_as_first_and_last)  # => ["Ryan", "McDermott"]
 ## **Classes**
 
 ### **Single Responsibility Principle (SRP)**
+
+We create a class called `Burglar`, which has a method called `steal`. This method breaks the **SRP** because it doesn't just steal. It also puts on and removes the invisibility cloak, which might lead to all sorts of issues for the burglar.
+
+```python
+class Burglar:
+    def __init__(self):
+        self._artifacts = []
+
+    def steal(self, artifact: str):
+        print("Putting on the invisibility cloak.")
+        print("Taking the artifact.")
+        self._artifacts.append(artifact)
+        print("Removing the invisibility cloak.")
+
+bilbo = Burglar()
+bilbo.steal("Arkenstone")
+```
+
+A better way would be to create separate methods that can be called when appropriate.
+
+```python
+class Burglar:
+    def __init__(self):
+        self._artifacts = []
+
+    def steal(self, artifact: str):
+        print("Taking the artifact.")
+        self._artifacts.append(artifact)
+    
+    def cloak(self):
+        print("Putting on the invisibility cloak.")
+
+    def remove_cloak(self):
+        print("Removing the invisibility cloak.")
+
+
+bilbo = Burglar()
+bilbo.cloak()
+bilbo.steal("Arkenstone")
+bilbo.remove_cloak()    
+```
+
+Now Bilbo can put on the cloak, walk in, steal the Arkenstone, walk out, so he won't be seen by Smaug and remove the cloak.
+
+Example taken from:
+
+https://codingwithjohan.com/blog/python/solid-single-responsibility-principle/
+
+
+
 ### **Open/Closed Principle (OCP)**
 ### **Liskov Substitution Principle (LSP)**
 ### **Interface Segregation Principle (ISP)**
